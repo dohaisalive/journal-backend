@@ -11,7 +11,13 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  profileImage: [String],
+  displayname: {
+    type: String,
+  },
+  friends:[{type:Schema.Types.ObjectId,ref:"User"}],
+  profileImage:{type:String},
+  headerImg:{type:String},
+  notifications:[{type:Schema.Types.ObjectId,ref:"Notification"}]
 });
 
 UserSchema.plugin(uniqueValidator);
