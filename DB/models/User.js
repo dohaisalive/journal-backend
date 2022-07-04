@@ -13,12 +13,20 @@ const UserSchema = new Schema({
   },
   displayname: {
     type: String,
+    default: `${this.username}`,
   },
-  friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  profileImage: { type: String },
-  headerImg: { type: String },
+  friends: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
+  profileImage: {
+    type: String,
+    default: "https://cdn-icons-png.flaticon.com/512/634/634795.png",
+  },
+  headerImg: {
+    type: String,
+    default:
+      "https://www.fil.ion.ucl.ac.uk/wp-content/uploads/2019/05/grey-background.jpg",
+  },
   notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
-  bio: { type: String },
+  bio: { type: String, default: "my bio" },
 });
 
 UserSchema.plugin(uniqueValidator);
