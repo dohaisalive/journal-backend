@@ -8,7 +8,11 @@ exports.signin = async (req, res, next) => {
     const payload = {
       _id: req.user._id,
       username: req.user.username,
-      //profileImage: req.user.profileImage,
+      profileImage: req.user.profileImage,
+      displayname: req.user.displayname,
+      friends: req.user.friends,
+      headerImg: req.user.headerImg,
+      bio: req.user.bio,
       exp: Date.now() + JWT_EXPIRATION,
     };
     const token = jwt.sign(payload, JWT_SECRET);
@@ -26,7 +30,11 @@ exports.signup = async (req, res, next) => {
     const payload = {
       _id: req.user._id,
       username: req.user.username,
-      //profileImage: req.user.profileImage,
+      profileImage: req.user.profileImage,
+      displayname: req.user.displayname,
+      friends: req.user.friends,
+      headerImg: req.user.headerImg,
+      bio: req.user.bio,
       exp: Date.now() + JWT_EXPIRATION,
     };
     const token = jwt.sign(payload, JWT_SECRET);
@@ -58,8 +66,10 @@ exports.getUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    if (req.files) {
-      //req.body.profileImage = `/media/${req.file.filename}`;
+    if (req.file) {
+      req.body.profileImage = `http://${req.get("host")}/media/${
+        req.file.filename
+      }`;
     }
     const userId = req.user._id;
     const user = await User.findByIdAndUpdate(userId, req.body, {

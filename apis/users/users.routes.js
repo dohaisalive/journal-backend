@@ -10,6 +10,8 @@ const {
   updateUser,
 } = require("./users.controllers");
 
+//upload.array("profileImage", 2),
+
 const router = express.Router();
 
 router.post("/signup", signup);
@@ -23,7 +25,7 @@ router.get("/user", passport.authenticate("jwt", { session: false }), getUser);
 router.put(
   "/updateUser",
   passport.authenticate("jwt", { session: false }),
-  upload.array("profileImage", 2),
+  upload.single("profileImage"),
   updateUser
 );
 
