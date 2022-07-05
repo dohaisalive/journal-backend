@@ -28,13 +28,13 @@ exports.signup = async (req, res, next) => {
     req.body.password = hashedPassword;
     const newUser = await User.create(req.body);
     const payload = {
-      _id: req.user._id,
-      username: req.user.username,
-      profileImage: req.user.profileImage,
-      displayname: req.user.displayname,
-      friends: req.user.friends,
-      headerImg: req.user.headerImg,
-      bio: req.user.bio,
+      _id: newUser._id,
+      username: newUser.username,
+      profileImage: newUser.profileImage,
+      displayname: newUser.displayname,
+      friends: newUser.friends,
+      headerImg: newUser.headerImg,
+      bio: newUser.bio,
       exp: Date.now() + JWT_EXPIRATION,
     };
     const token = jwt.sign(payload, JWT_SECRET);
