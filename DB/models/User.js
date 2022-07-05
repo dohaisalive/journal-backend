@@ -13,6 +13,7 @@ const UserSchema = new Schema({
   },
   displayname: {
     type: String,
+    default:"doha"
   },
   friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
   profileImage: { type: String },
