@@ -13,7 +13,6 @@ const UserSchema = new Schema({
   },
   displayname: {
     type: String,
-    default: `${this.username}`,
   },
   friends: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
   profileImage: {
@@ -30,4 +29,9 @@ const UserSchema = new Schema({
 });
 
 UserSchema.plugin(uniqueValidator);
+
+UserSchema.pre('save', function(next) {
+  this.displayname = this.username;
+  next();
+});
 module.exports = model("User", UserSchema);
