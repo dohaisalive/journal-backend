@@ -54,28 +54,18 @@ exports.getUsers = async (req, res, next) => {
   }
 };
 
-exports.getUser = async (req, res, next) => {
-  try {
-    const userId = req.user._id;
-    const user = await User.findById(userId);
-    res.status(201).json(users);
-  } catch (err) {
-    next(err);
-  }
-};
-
 exports.updateUser = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.profileImage = `http://${req.get("host")}/media/${
-        req.file.filename
-      }`;
-    }
+    // if (req.file) {
+    //   req.body.profileImage = `http://${req.get("host")}/media/${
+    //     req.file.filename
+    //   }`;
+    // }
+
     const userId = req.user._id;
-    const user = await User.findByIdAndUpdate(userId, req.body, {
-      new: true,
-    }).select("-password");
-    res.status(201).json(user);
+
+    const user = await User.findByIdAndUpdate(userId, req.body);
+    res.status(200).json(user);
   } catch (error) {
     next(error);
   }

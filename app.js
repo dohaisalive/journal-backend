@@ -6,6 +6,7 @@ const path = require("path");
 
 //routes
 const userRoutes = require("./apis/users/users.routes");
+const entriesRoutes = require("./apis/entries/entries.routes");
 
 //middlewares
 const passport = require("passport");
@@ -24,6 +25,7 @@ app.use(cors());
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 app.use(userRoutes);
+app.use("/journal", entriesRoutes);
 
 app.use(pathNotFound);
 app.use(errorHandling);
