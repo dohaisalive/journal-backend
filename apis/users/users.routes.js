@@ -2,7 +2,13 @@ const express = require("express");
 const passport = require("passport");
 const upload = require("../../middleware/multer");
 
-const { signup, signin, getUsers, updateUser } = require("./users.controllers");
+const {
+  signup,
+  signin,
+  getUsers,
+  getUser,
+  updateUser,
+} = require("./users.controllers");
 
 //upload.array("profileImage", 2),
 
@@ -15,6 +21,7 @@ router.post(
   signin
 );
 router.get("/users", getUsers);
+router.get("/user", passport.authenticate("jwt", { session: false }), getUser);
 router.put(
   "/updateUser",
 
