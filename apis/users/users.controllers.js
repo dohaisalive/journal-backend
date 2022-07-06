@@ -18,6 +18,15 @@ exports.signin = async (req, res, next) => {
     const token = jwt.sign(payload, JWT_SECRET);
     res.json({ token: token });
   } catch (err) {
+    exports.getUser = async (req, res, next) => {
+      try {
+        const userId = req.user._id;
+        const user = await User.findById(userId);
+        res.status(201).json(users);
+      } catch (err) {
+        next(err);
+      }
+    };
     next(err);
   }
 };
@@ -45,6 +54,16 @@ exports.signup = async (req, res, next) => {
   }
 };
 
+exports.getUser = async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    res.status(201).json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.getUsers = async (req, res, next) => {
   try {
     const users = await User.find();
@@ -64,7 +83,9 @@ exports.updateUser = async (req, res, next) => {
 
     const userId = req.user._id;
 
-    const user = await User.findByIdAndUpdate(userId, req.body);
+    const user = await User.findByIdAndUpdate(userId, req.body, {
+      new: true,
+    }).select("-password");
     res.status(200).json(user);
   } catch (error) {
     next(error);
