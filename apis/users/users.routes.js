@@ -24,8 +24,9 @@ router.get("/users", getUsers);
 router.get("/user", passport.authenticate("jwt", { session: false }), getUser);
 router.put(
   "/updateUser",
+
   passport.authenticate("jwt", { session: false }),
-  upload.single("profileImage"),
+  //upload.single("profileImage"),
   updateUser
 );
 
