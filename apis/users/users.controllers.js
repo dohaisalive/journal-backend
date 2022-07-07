@@ -54,6 +54,15 @@ exports.signup = async (req, res, next) => {
   }
 };
 
+exports.getUsers = async (req, res, next) => {
+  try {
+    const users = await User.find().populate("friends");
+    res.status(201).json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.getUser = async (req, res, next) => {
   try {
     const userId = req.user._id;
