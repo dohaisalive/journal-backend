@@ -17,7 +17,7 @@ const UserSchema = new Schema({
   friends: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
   profileImage: {
     type: String,
-    default: "https://cdn-icons-png.flaticon.com/512/634/634795.png",
+    sdefault: "https://cdn-icons-png.flaticon.com/512/634/634795.png",
   },
   headerImg: {
     type: String,
@@ -30,7 +30,7 @@ const UserSchema = new Schema({
 
 UserSchema.plugin(uniqueValidator);
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre("save", function (next) {
   this.displayname = this.username;
   next();
 });

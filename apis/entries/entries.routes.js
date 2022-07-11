@@ -12,13 +12,8 @@ const {
 const router = express.Router();
 
 router.get("/", fetchEntries);
-router.post("/", passport.authenticate("jwt", { session: false }), createEntry);
-router.put(
-  "/:EntryId",
-  passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
-  updateEntry
-);
+router.post("/", createEntry);
+router.put("/:EntryId", updateEntry);
 router.delete(
   "/:EntryId",
   passport.authenticate("jwt", { session: false }),
