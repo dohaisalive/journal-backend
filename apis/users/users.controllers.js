@@ -2,6 +2,7 @@ const User = require("../../DB/models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET, JWT_EXPIRATION } = require("../../config/keys");
+const fs = require("fs");
 
 exports.signin = async (req, res, next) => {
   try {
@@ -73,8 +74,6 @@ exports.getUser = async (req, res, next) => {
   }
 };
 
-
-
 exports.updateUser = async (req, res, next) => {
   try {
     // if (req.file) {
@@ -83,13 +82,24 @@ exports.updateUser = async (req, res, next) => {
     //   }`;
     // }
 
-    const userId = req.user._id;
-
+    const { userId } = req.params;
+    console.log("req.body.profileImage: " + req.body.profileImage);
     const user = await User.findByIdAndUpdate(userId, req.body, {
       new: true,
     }).select("-password");
+    console.log("user.profileImage: " + user.profileImage);
+
     res.status(200).json(user);
   } catch (error) {
     next(error);
   }
+};
+
+exports.uploadImage = async (req, res, next) => {
+  const date = Date.now();
+  const link = `./media/userMedia/${date}.jpeg`;
+  req.pipe(fs.createWriteStream(link));
+  const resLink = `http://${req.get("host")}/media/userMedia/${date}.jpeg`;
+  console.log("new link: " + resLink);
+  res.status(200).send(resLink);
 };

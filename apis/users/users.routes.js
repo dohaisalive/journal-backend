@@ -8,6 +8,7 @@ const {
   getUsers,
   getUser,
   updateUser,
+  uploadImage,
 } = require("./users.controllers");
 
 //upload.array("profileImage", 2),
@@ -22,12 +23,7 @@ router.post(
 );
 router.get("/users", getUsers);
 router.get("/user", passport.authenticate("jwt", { session: false }), getUser);
-router.put(
-  "/updateUser",
-  passport.authenticate("jwt", { session: false }),
-  upload.single("profileImage"),
-  updateUser
-);
-
+router.put("/updateUser/:userId", updateUser);
+router.post("/uploadImage", uploadImage);
 
 module.exports = router;

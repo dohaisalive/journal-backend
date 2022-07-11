@@ -25,6 +25,7 @@ app.use(cors());
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 app.use(userRoutes);
+
 app.use("/journal", entriesRoutes);
 
 app.use(pathNotFound);
