@@ -5,6 +5,14 @@ exports.fetchEntries = async (req, res) => {
   res.status(200).json(allEntries);
 };
 
+exports.fetchAUserEntries = async (req, res) => {
+  const userId = req.params.UserId;
+  const allEntries = await Entry.find().populate("friends");
+
+  const userEntries = allEntries.filter((entry) => entry.user == userId);
+  res.status(200).json(userEntries);
+};
+
 exports.createEntry = async (req, res) => {
   try {
     const newEntry = await Entry.create(req.body);
@@ -18,14 +26,8 @@ exports.updateEntry = async (req, res) => {
   try {
     const foundEntry = await Entry.findById(req.params.EntryId);
     if (foundEntry) {
-      if (req.user._id.equals(foundEntry.user)) {
-        await Entry.findByIdAndUpdate(req.params.EntryId, req.body);
-        res.status(204).end();
-      } else {
-        res.status(404).json({ message: "You're not authorized!" });
-      }
-    } else {
-      res.status(404).json({ message: "Entry deosn't exist!" });
+      await Entry.findByIdAndUpdate(req.params.EntryId, req.body);
+      res.status(204).end();
     }
   } catch (error) {
     res.status(500).json(error);
