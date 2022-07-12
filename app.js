@@ -22,6 +22,7 @@ passport.use(jwtStrategy);
 app.use(cors());
 
 //routes
+//important so the media file can be accessible from other devices
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 app.use(userRoutes);
