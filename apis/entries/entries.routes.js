@@ -7,6 +7,7 @@ const {
   createEntry,
   updateEntry,
   deleteEntry,
+  updateFav,
 } = require("./entries.controller");
 
 const router = express.Router();
@@ -14,10 +15,7 @@ const router = express.Router();
 router.get("/", fetchEntries);
 router.post("/", createEntry);
 router.put("/:EntryId", updateEntry);
-router.delete(
-  "/:EntryId",
-  passport.authenticate("jwt", { session: false }),
-  deleteEntry
-);
+router.put("/fav/:EntryId", updateFav);
+router.delete("/:EntryId", deleteEntry);
 
 module.exports = router;

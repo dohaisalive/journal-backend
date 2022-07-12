@@ -99,7 +99,8 @@ exports.uploadImage = async (req, res, next) => {
   const date = Date.now();
   const link = `./media/userMedia/${date}.jpeg`;
   req.pipe(fs.createWriteStream(link));
-  const resLink = `http://${req.get("host")}/media/userMedia/${date}.jpeg`;
+  //dont store the whole link the the DB, only the relevant path.
+  const resLink = `/media/userMedia/${date}.jpeg`;
   console.log("new link: " + resLink);
   res.status(200).send(resLink);
 };

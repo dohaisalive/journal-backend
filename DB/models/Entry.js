@@ -18,7 +18,9 @@ const EntrySchema = new Schema({
   attachments: [{ type: String }],
   friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
   user: { type: Schema.Types.ObjectId, ref: "User" },
+
   isPriv: { type: Boolean }, //public or private
+  isFav: { type: Boolean, default: false },
 });
 
 module.exports = model("Entry", EntrySchema);
