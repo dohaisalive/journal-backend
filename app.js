@@ -7,6 +7,7 @@ const path = require("path");
 //routes
 const userRoutes = require("./apis/users/users.routes");
 const entriesRoutes = require("./apis/entries/entries.routes");
+const notificationsRoutes=require("./apis/notifications/notifications.routes");
 
 //middlewares
 const passport = require("passport");
@@ -28,6 +29,7 @@ app.use("/media", express.static(path.join(__dirname, "media")));
 app.use(userRoutes);
 
 app.use("/journal", entriesRoutes);
+app.use("/notifications", notificationsRoutes);
 
 app.use(pathNotFound);
 app.use(errorHandling);
