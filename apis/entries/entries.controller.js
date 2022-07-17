@@ -1,4 +1,6 @@
 const Entry = require("../../DB/models/Entry");
+const User = require("../../DB/models/User");
+const Notification = require("../../DB/models/Notification");
 
 exports.fetchEntries = async (req, res) => {
   const allEntries = await Entry.find().populate("friends");
@@ -16,6 +18,24 @@ exports.fetchAUserEntries = async (req, res) => {
 exports.createEntry = async (req, res) => {
   try {
     const newEntry = await Entry.create(req.body);
+
+    if (newEntry.friends.length != 0) {
+      newEntry.friends.forEach(async (friendID) => {
+        const notification = await Notification.create({
+          sender: newEntry.user,
+          receiver: friendID,
+          type: "tag",
+          entry: newEntry._id,
+        });
+
+        await User.findByIdAndUpdate(
+          friendID,
+          { $push: { notifications: notification } },
+          { new: true }
+        ).select("-password");
+      });
+    }
+
     res.status(201).json(newEntry);
   } catch (error) {
     res.status(501).json(error);
@@ -45,8 +65,6 @@ exports.updateFav = async (req, res) => {
           new: true,
         }
       );
-      console.log("received: ", req.body);
-      console.log("sent: ", modify.isFav);
 
       res.status(200).json(modify);
     }
