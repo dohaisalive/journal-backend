@@ -79,6 +79,7 @@ exports.updateUser = async (req, res, next) => {
   }
 };
 
+
 exports.uploadImage = async (req, res, next) => {
   const date = Date.now();
   const link = `./media/userMedia/${date}.jpeg`;

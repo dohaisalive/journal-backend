@@ -26,6 +26,28 @@ exports.acceptFriend=async(req,res,next)=>{
     catch(error){res.status(501).json(error);}
 }
 
+exports.pending=async(req,res,next)=>{
+  const {friendId,userId}=req.params;
+  try{
+    const user= await User.findByIdAndUpdate(userId,{$push:{notifications:friendId}},{new:true});
+    res.status(200).json(user);
+}
+catch(error){res.status(501).json(error);}
+}
+
+exports.rejectFriend=async(req,res,next)=>{
+  try {
+    const { friendId } = req.params;
+    const user = await User.findByIdAndUpdate(friendId, req.body, {
+      new: true,
+    }).select("-password");
+
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+}
+
 exports.deleteNotification = async (req, res) => {
     const {notificationId}=req.params
   try {

@@ -23,7 +23,7 @@ const UserSchema = new Schema({
     type: String,
     default: "/media/defaults/header.jpg",
   },
-  notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
+  notifications: [{ type: Schema.Types.ObjectId, ref: "User" }],
   bio: { type: String, default: "my bio" },
 });
 

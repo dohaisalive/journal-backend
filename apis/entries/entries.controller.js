@@ -18,6 +18,7 @@ exports.fetchAUserEntries = async (req, res) => {
 exports.createEntry = async (req, res) => {
   try {
     const newEntry = await Entry.create(req.body);
+    console.log("new entryy   ",newEntry)
 
     if (newEntry.friends.length != 0) {
       newEntry.friends.forEach(async (friendID) => {

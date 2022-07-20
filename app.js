@@ -34,7 +34,7 @@ app.use("/notifications", notificationsRoutes);
 app.use(pathNotFound);
 app.use(errorHandling);
 
-const PORT = 8001;
+const PORT = 8000;
 app.listen(PORT, () => {
   console.log(`The application is running on localhost:${PORT}`);
 });
